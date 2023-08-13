@@ -1,0 +1,64 @@
+type (
+	RegisterReq {
+		Username string `form:"username"`
+		Password string `form:"password"`
+	}
+	RegisterResp {
+		Status_code int8   `json:"status_code"`
+		Status_msg  string `json:"status_msg"`
+		User_id     int64  `json:"user_id"`
+		Token       string `json:"token"`
+	}
+)
+
+type (
+	LoginReq {
+		Username string `form:"username"`
+		Password string `form:"password"`
+	}
+	LoginResp {
+		Status_code int8   `json:"status_code"`
+		Status_msg  string `json:"status_msg"`
+		User_id     int64  `json:"user_id"`
+		Token       string `json:"token"`
+	}
+)
+
+type (
+	UserinfoReq {
+		User_id int64  `form:"user_id"`
+		Token   string `form:"token"`
+	}
+	UserinfoResp {
+		Status_code int8   `json:"status_code"`
+		Status_msg  string `json:"status_msg"`
+		User        *User  `json:"user"`
+	}
+	User {
+		Id               int64  `json:"id"`
+		Name             string `json:"name"`
+		Follow_count     int64  `json:"follow_count"`
+		Follower_count   int64  `json:"follower_count"`
+		Is_follow        bool   `json:"is_follow"`
+		Avatar           string `json:"avatar"`
+		Background_image string `json:"background_image"`
+		Signature        string `json:"signature"`
+		Total_favorited  string `json:"total_favorited"`
+		Work_count       int64  `json:"work_count"`
+		Favorite_count   int64  `json:"favorite_count"`
+	}
+)
+
+@server(
+	group: user
+)
+service user-api {
+	@handler register
+	post /douyin/user/register (RegisterReq) returns (RegisterResp)
+
+	@handler Login
+	post /douyin/user/login (LoginReq) returns (LoginResp)
+
+	@handler Userinfo
+	get /douyin/user (UserinfoReq) returns (UserinfoResp)
+}
