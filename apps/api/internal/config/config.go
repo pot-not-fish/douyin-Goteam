@@ -7,5 +7,8 @@ import (
 
 type Config struct {
 	rest.RestConf
-	UserRpc zrpc.RpcClientConf
+	UserRpc     zrpc.RpcClientConf
+	VideoRpc    zrpc.RpcClientConf
+	RelationRpc zrpc.RpcClientConf
+	ChatRpc     zrpc.RpcClientConf
 }

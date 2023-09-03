@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+package relation;
+
+option go_package = "./relation";
+
+message RelationActionReq {
+    int64 user_id = 1;
+    int64 to_user_id = 2;
+    int32 action_type = 3;
+}
+
+message RelationActionResp {
+    string status_msg = 1;
+}
+
+message RelationFollowReq {
+    int64 user_id = 1;
+    int64 me_id = 2;
+}
+
+message RelationFollowResp {
+    repeated User user_list = 1;
+}
+
+message RelationFansReq {
+    int64 user_id = 1;
+    int64 me_id = 2;
+}
+
+message RelationFansResp {
+    repeated User user_list = 1;
+}
+
+message RelationFriendReq {
+    int64 user_id = 1;
+}
+
+message RelationFriendResp {
+    repeated FriendUser user_list = 1;
+}
+
+message FriendUser {
+    int64 id = 1;
+    string name = 2;
+    int64 follow_count = 3;
+    int64 follower_count = 4;
+    bool is_follow = 5;
+    string avatar = 6;
+    string background_image = 7;
+    string signature = 8;
+    string total_favorited = 9;
+    int64 work_count = 10;
+    int64 favorite_count = 11;
+    optional string message = 12;
+    optional int64 msg_type = 13;
+}
+
+message User {
+    int64 id = 1;
+    string name = 2;
+    int64 follow_count = 3;
+    int64 follower_count = 4;
+    bool is_follow = 5;
+    string avatar = 6;
+    string background_image = 7;
+    string signature = 8;
+    string total_favorited = 9;
+    int64 work_count = 10;
+    int64 favorite_count = 11;
+}
+
+service Message {
+    rpc RelationAction (RelationActionReq) returns (RelationActionResp);
+
+    rpc RelationFollow (RelationFollowReq) returns (RelationFollowResp);
+
+    rpc RelationFans (RelationFansReq) returns (RelationFansResp);
+
+    rpc RelationFriend (RelationFriendReq) returns (RelationFriendResp);
+}

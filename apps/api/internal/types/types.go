@@ -49,3 +49,207 @@ type User struct {
 	Work_count       int64  `json:"work_count"`
 	Favorite_count   int64  `json:"favorite_count"`
 }
+
+type VideoPublishReq struct {
+	Token string `form:"token"`
+	Title string `form:"title"`
+}
+
+type VideoPublishResp struct {
+	Status_code int64  `json:"status_code"`
+	Status_msg  string `json:"status_msg"`
+}
+
+type VideoListReq struct {
+	Token   string `form:"token,optional"`
+	User_id int64  `form:"user_id"`
+}
+
+type VideoListResp struct {
+	Status_code int8    `json:"status_code"`
+	Status_msg  string  `json:"status_msg"`
+	Video_list  []Video `json:"video_list"`
+}
+
+type Video struct {
+	Id             int64  `json:"id"`
+	Author         Author `json:"author"`
+	Play_url       string `json:"play_url"`
+	Cover_url      string `json:"cover_url"`
+	Favorite_count int64  `json:"favorite_count"`
+	Comment_count  int64  `json:"comment_count"`
+	Is_favorite    bool   `json:"is_favorite"`
+	Title          string `json:"title"`
+}
+
+type Author struct {
+	Id               int64  `json:"id"`
+	Name             string `json:"name"`
+	Follow_count     int64  `json:"follow_count"`
+	Follower_count   int64  `json:"follower_count"`
+	Is_follow        bool   `json:"is_follow"`
+	Avatar           string `json:"avatar"`
+	Background_image string `json:"background_image"`
+	Signature        string `json:"signature"`
+	Total_favorited  string `json:"total_favorited"`
+	Work_count       int64  `json:"work_count"`
+	Favorite_count   int64  `json:"favorite_count"`
+}
+
+type VideoFeedReq struct {
+	Latest_time string `form:"latest_time,optional"`
+	Token       string `form:"token,optional"`
+}
+
+type VideoFeedResp struct {
+	Status_code int8    `json:"status_code"`
+	Status_msg  string  `json:"status_msg"`
+	Next_time   int32   `json:"next_time"`
+	Video_list  []Video `json:"video_list"`
+}
+
+type VideoFavoriteReq struct {
+	Token       string `form:"token"`
+	Video_id    string `form:"video_id"`
+	Action_type string `form:"action_type"`
+}
+
+type VideoFavoriteResp struct {
+	Status_code int8   `form:"status_code"`
+	Status_msg  string `form:"status_msg"`
+}
+
+type VideoFavorListReq struct {
+	User_id string `form:"user_id"`
+	Token   string `form:"token,optional"`
+}
+
+type VideoFavorListResp struct {
+	Status_code int8    `json:"status_code"`
+	Status_msg  string  `json:"status_msg"`
+	Video_list  []Video `json:"video_list"`
+}
+
+type CommentActionReq struct {
+	Token        string `form:"token"`
+	Video_id     string `form:"video_id"`
+	Action_type  string `form:"action_type"`
+	Comment_text string `form:"comment_text,optional"`
+	Comment_id   string `form:"comment_id,optional"`
+}
+
+type CommentActionResp struct {
+	Status_code int8     `json:"status_code"`
+	Status_msg  string   `json:"status_msg"`
+	Comment     Comments `json:"comment"`
+}
+
+type Comments struct {
+	Id          int64  `json:"id"`
+	User        Author `json:"user"`
+	Content     string `json:"content"`
+	Create_date string `json:"create_date"`
+}
+
+type CommentListReq struct {
+	Token    string `form:"token,optional"`
+	Video_id string `form:"video_id,optional"`
+}
+
+type CommentListResp struct {
+	Status_code  int8       `json:"status_code"`
+	Status_msg   string     `json:"status_msg"`
+	Comment_list []Comments `json:"comment_list"`
+}
+
+type RelationActionReq struct {
+	Token       string `form:"token"`
+	To_user_id  string `form:"to_user_id"`
+	Action_type string `form:"action_type"`
+}
+
+type RelationActionResp struct {
+	Status_code int8   `json:"status_code"`
+	Status_msg  string `json:"status_msg"`
+}
+
+type RelationFollowReq struct {
+	User_id int64  `form:"user_id"`
+	Token   string `form:"token"`
+}
+
+type RelationFollowResp struct {
+	Status_code int8     `json:"status_code"`
+	Status_msg  string   `json:"status_msg"`
+	User_list   []Author `json:"user_list"`
+}
+
+type RelationFriendReq struct {
+	User_id int64  `form:"user_id"`
+	Token   string `form:"token"`
+}
+
+type RelationFriendResp struct {
+	Status_code int8         `json:"status_code"`
+	Status_msg  string       `json:"status_msg"`
+	User_list   []FreindUser `json:"user_list"`
+}
+
+type FreindUser struct {
+	Id               int64  `json:"id"`
+	Name             string `json:"name"`
+	Follow_count     int64  `json:"follow_count"`
+	Follower_count   int64  `json:"follower_count"`
+	Is_follow        bool   `json:"is_follow"`
+	Avatar           string `json:"avatar"`
+	Background_image string `json:"background_image"`
+	Signature        string `json:"signature"`
+	Total_favorited  string `json:"total_favorited"`
+	Work_count       int64  `json:"work_count"`
+	Favorite_count   int64  `json:"favorite_count"`
+	Message          string `json:"message,optional"`
+	MsgType          int64  `json:"msg_type,optional"`
+}
+
+type RelationFansReq struct {
+	User_id int64  `form:"user_id"`
+	Token   string `form:"token"`
+}
+
+type RelationFansResp struct {
+	Status_code int8     `json:"status_code"`
+	Status_msg  string   `json:"status_msg"`
+	User_list   []Author `json:"user_list"`
+}
+
+type MessageActionReq struct {
+	Token       string `form:"token"`
+	To_user_id  int64  `form:"to_user_id"`
+	Action_type string `form:"action_type"`
+	Content     string `form:"content"`
+}
+
+type MessageActionResp struct {
+	Status_code int8   `json:"status_code"`
+	Status_msg  string `json:"status_msg"`
+}
+
+type MessageChatReq struct {
+	Token        string `form:"token"`
+	To_user_id   int64  `form:"to_user_id"`
+	Pre_msg_time int64  `form:"pre_msg_time"`
+}
+
+type MessageChatResp struct {
+	Status_code  int8          `json:"status_code"`
+	Status_msg   string        `json:"status_msg"`
+	Message_list []MessageList `json:"message_list"`
+}
+
+type MessageList struct {
+	Id           int64  `json:"id"`
+	To_user_id   int64  `json:"to_user_id"`
+	From_user_id int64  `json:"from_user_id"`
+	Content      string `json:"content"`
+	Create_time  int64  `json:"create_time"`
+}

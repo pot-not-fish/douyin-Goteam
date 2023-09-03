@@ -1,0 +1,10 @@
+Name: relation.rpc
+ListenOn: 0.0.0.0:8082
+Timeout: 60000
+# Log:
+#   Mode: file
+#   Encoding: plain
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: relation.rpc

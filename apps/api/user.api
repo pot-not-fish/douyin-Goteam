@@ -49,6 +49,218 @@ type (
 	}
 )
 
+type (
+	VideoPublishReq {
+		Token string `form:"token"`
+		Title string `form:"title"`
+	}
+	VideoPublishResp {
+		Status_code int64  `json:"status_code"`
+		Status_msg  string `json:"status_msg"`
+	}
+)
+
+type (
+	VideoListReq {
+		Token   string `form:"token,optional"`
+		User_id int64  `form:"user_id"`
+	}
+	VideoListResp {
+		Status_code int8    `json:"status_code"`
+		Status_msg  string  `json:"status_msg"`
+		Video_list  []Video `json:"video_list"`
+	}
+	Video {
+		Id             int64  `json:"id"`
+		Author         Author `json:"author"`
+		Play_url       string `json:"play_url"`
+		Cover_url      string `json:"cover_url"`
+		Favorite_count int64  `json:"favorite_count"`
+		Comment_count  int64  `json:"comment_count"`
+		Is_favorite    bool   `json:"is_favorite"`
+		Title          string `json:"title"`
+	}
+	Author {
+		Id               int64  `json:"id"`
+		Name             string `json:"name"`
+		Follow_count     int64  `json:"follow_count"`
+		Follower_count   int64  `json:"follower_count"`
+		Is_follow        bool   `json:"is_follow"`
+		Avatar           string `json:"avatar"`
+		Background_image string `json:"background_image"`
+		Signature        string `json:"signature"`
+		Total_favorited  string `json:"total_favorited"`
+		Work_count       int64  `json:"work_count"`
+		Favorite_count   int64  `json:"favorite_count"`
+	}
+)
+
+type (
+	VideoFeedReq {
+		Latest_time string `form:"latest_time,optional"`
+		Token       string `form:"token,optional"`
+	}
+	VideoFeedResp {
+		Status_code int8    `json:"status_code"`
+		Status_msg  string  `json:"status_msg"`
+		Next_time   int32   `json:"next_time"`
+		Video_list  []Video `json:"video_list"`
+	}
+)
+
+type (
+	VideoFavoriteReq {
+		Token       string `form:"token"`
+		Video_id    string `form:"video_id"`
+		Action_type string `form:"action_type"`
+	}
+	VideoFavoriteResp {
+		Status_code int8   `form:"status_code"`
+		Status_msg  string `form:"status_msg"`
+	}
+)
+
+type (
+	VideoFavorListReq {
+		User_id string `form:"user_id"`
+		Token   string `form:"token,optional"`
+	}
+	VideoFavorListResp {
+		Status_code int8    `json:"status_code"`
+		Status_msg  string  `json:"status_msg"`
+		Video_list  []Video `json:"video_list"`
+	}
+)
+
+type (
+	CommentActionReq {
+		Token        string `form:"token"`
+		Video_id     string `form:"video_id"`
+		Action_type  string `form:"action_type"`
+		Comment_text string `form:"comment_text,optional"`
+		Comment_id   string `form:"comment_id,optional"`
+	}
+	CommentActionResp {
+		Status_code int8     `json:"status_code"`
+		Status_msg  string   `json:"status_msg"`
+		Comment     Comments `json:"comment"`
+	}
+	Comments {
+		Id          int64  `json:"id"`
+		User        Author `json:"user"`
+		Content     string `json:"content"`
+		Create_date string `json:"create_date"`
+	}
+)
+
+type (
+	CommentListReq {
+		Token    string `form:"token,optional"`
+		Video_id string `form:"video_id,optional"`
+	}
+	CommentListResp {
+		Status_code  int8       `json:"status_code"`
+		Status_msg   string     `json:"status_msg"`
+		Comment_list []Comments `json:"comment_list"`
+	}
+)
+
+type (
+	RelationActionReq {
+		Token       string `form:"token"`
+		To_user_id  string `form:"to_user_id"`
+		Action_type string `form:"action_type"`
+	}
+	RelationActionResp {
+		Status_code int8   `json:"status_code"`
+		Status_msg  string `json:"status_msg"`
+	}
+)
+
+type (
+	RelationFollowReq {
+		User_id int64  `form:"user_id"`
+		Token   string `form:"token"`
+	}
+	RelationFollowResp {
+		Status_code int8     `json:"status_code"`
+		Status_msg  string   `json:"status_msg"`
+		User_list   []Author `json:"user_list"`
+	}
+)
+
+type (
+	RelationFriendReq {
+		User_id int64  `form:"user_id"`
+		Token   string `form:"token"`
+	}
+	RelationFriendResp {
+		Status_code int8         `json:"status_code"`
+		Status_msg  string       `json:"status_msg"`
+		User_list   []FreindUser `json:"user_list"`
+	}
+	FreindUser {
+		Id               int64  `json:"id"`
+		Name             string `json:"name"`
+		Follow_count     int64  `json:"follow_count"`
+		Follower_count   int64  `json:"follower_count"`
+		Is_follow        bool   `json:"is_follow"`
+		Avatar           string `json:"avatar"`
+		Background_image string `json:"background_image"`
+		Signature        string `json:"signature"`
+		Total_favorited  string `json:"total_favorited"`
+		Work_count       int64  `json:"work_count"`
+		Favorite_count   int64  `json:"favorite_count"`
+		Message          string `json:"message,optional"`
+		MsgType          int64  `json:"msg_type,optional"`
+	}
+)
+
+type (
+	RelationFansReq {
+		User_id int64  `form:"user_id"`
+		Token   string `form:"token"`
+	}
+	RelationFansResp {
+		Status_code int8     `json:"status_code"`
+		Status_msg  string   `json:"status_msg"`
+		User_list   []Author `json:"user_list"`
+	}
+)
+
+type (
+	MessageActionReq {
+		Token       string `form:"token"`
+		To_user_id  int64  `form:"to_user_id"`
+		Action_type string `form:"action_type"`
+		Content     string `form:"content"`
+	}
+	MessageActionResp {
+		Status_code int8   `json:"status_code"`
+		Status_msg  string `json:"status_msg"`
+	}
+)
+
+type (
+	MessageChatReq {
+		Token        string `form:"token"`
+		To_user_id   int64  `form:"to_user_id"`
+		Pre_msg_time int64  `form:"pre_msg_time"`
+	}
+	MessageChatResp {
+		Status_code  int8          `json:"status_code"`
+		Status_msg   string        `json:"status_msg"`
+		Message_list []MessageList `json:"message_list"`
+	}
+	MessageList {
+		Id           int64  `json:"id"`
+		To_user_id   int64  `json:"to_user_id"`
+		From_user_id int64  `json:"from_user_id"`
+		Content      string `json:"content"`
+		Create_time  int64  `json:"create_time"`
+	}
+)
+
 @server(
 	group: user
 )
@@ -61,4 +273,58 @@ service user-api {
 
 	@handler Userinfo
 	get /douyin/user (UserinfoReq) returns (UserinfoResp)
+}
+
+@server(
+	group: video
+)
+service user-api {
+	@handler publish
+	post /douyin/publish/action (VideoPublishReq) returns (VideoPublishResp)
+
+	@handler list
+	get /douyin/publish/list (VideoListReq) returns (VideoListResp)
+
+	@handler feed
+	get /douyin/feed (VideoFeedReq) returns (VideoFeedResp)
+
+	@handler favorite
+	post /douyin/favorite/action (VideoFavoriteReq) returns (VideoFavoriteResp)
+
+	@handler favorlist
+	get /douyin/favorite/list (VideoFavorListReq) returns (VideoFavorListResp)
+
+	@handler pubcomment
+	post /douyin/comment/action (CommentActionReq) returns (CommentActionResp)
+
+	@handler commentlist
+	get /douyin/comment/list (CommentListReq) returns (CommentListResp)
+}
+
+@server(
+	group: relation
+)
+service user-api {
+	@handler relationaction
+	post /douyin/relation/action (RelationActionReq) returns (RelationActionResp)
+
+	@handler relationfollow
+	get /douyin/relation/follow/list (RelationFollowReq) returns (RelationFollowResp)
+
+	@handler relationfans
+	get /douyin/relation/follower/list (RelationFansReq) returns (RelationFansResp)
+
+	@handler relationfriend
+	get /douyin/relation/friend/list (RelationFriendReq) returns (RelationFriendResp)
+}
+
+@server (
+	group: chat
+)
+service user-api {
+	@handler messageaction
+	post /douyin/message/action (MessageActionReq) returns (MessageActionResp)
+
+	@handler messagechat
+	get /douyin/message/chat (MessageChatReq) returns (MessageChatResp)
 }

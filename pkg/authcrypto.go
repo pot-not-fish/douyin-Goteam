@@ -12,7 +12,7 @@ import (
 
 const (
 	AccessSecret = "uOvKLmVfztaXGpNYd4Z0I1SiT7MweJhl"         // 私钥
-	AccessExpire = 86400                                      // 持有期限
+	AccessExpire = 604800                                     // 持有期限
 	Header       = `{"alg": "HS256","typ": "JWT"}`            // JWT的header部分 固定
 	BaseHeader   = "eyJhbGciOiAiSFMyNTYiLCJ0eXAiOiAiSldUIn0=" // JWT的header部分 base64编码
 )
@@ -47,32 +47,32 @@ func GetAuthToken(id int64) (string, error) {
 }
 
 // 传入token判断是否有效
-func AuthToken(token string) error {
+func AuthToken(token string) (int64, error) {
 	iter := strings.Split(token, ".")
 	data, err := base64.StdEncoding.DecodeString(iter[1])
 	if err != nil {
-		return err
+		return 0, err
 	}
 	var payload Payload
 	err = json.Unmarshal(data, &payload)
 	if err != nil {
-		return err
+		return 0, err
 	}
 	// token是否过期
 	if time.Now().Unix() > payload.Exp {
-		return errors.New("token out of data")
+		return 0, errors.New("token out of data")
 	}
 	message := iter[0] + iter[1]
 	mac := hmac.New(sha256.New, []byte(AccessSecret))
 	_, err = mac.Write([]byte(message))
 	if err != nil {
-		return err
+		return 0, err
 	}
 	secret := base64.URLEncoding.EncodeToString(mac.Sum(nil))
 	// token是否有效
 	if secret != iter[2] {
-		return errors.New("token is wrong")
+		return 0, errors.New("token is wrong")
 	} else {
-		return nil
+		return payload.Id, nil
 	}
 }

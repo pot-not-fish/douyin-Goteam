@@ -31,14 +31,17 @@ func (l *RegisterLogic) Register(in *user.RegisterReq) (*user.RegisterResp, erro
 	// todo: add your logic here and delete this line
 
 	// 数据库连接
-	db, err := userdb.MysqlInit()
-	if err != nil {
-		return nil, err
-	}
+	// db, err := userdb.MysqlInit()
+	// if err != nil {
+	// 	return nil, err
+	// }
+	db := l.svcCtx.DbEngin
+
 	// 判断用户名是否重复
 	info := userdb.User{}
-	err = db.Where("username = ?", in.Username).First(&info).Error
+	err := db.Where("username = ?", in.Username).First(&info).Error
 	if err != nil {
+
 		// 创建用户
 		info = userdb.User{Username: in.Username, Password: fmt.Sprintf("%x", md5.Sum([]byte(in.Password)))}
 		err = db.Create(&info).Error

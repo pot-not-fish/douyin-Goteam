@@ -1,0 +1,10 @@
+Name: chat.rpc
+ListenOn: 0.0.0.0:8083
+Timeout: 60000
+# Log:
+#   Mode: file
+#   Encoding: plain
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: chat.rpc

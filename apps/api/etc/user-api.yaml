@@ -1,9 +1,35 @@
 Name: user-api
 Host: 0.0.0.0
 Port: 8888
-
+MaxBytes: 104857600
+Timeout: 30000
+# Log:
+#   Mode: file
+#   Encoding: plain
 UserRpc:
   Etcd:
     Hosts:
     - 127.0.0.1:2379
     Key: user.rpc
+  Timeout: 60000
+
+VideoRpc:
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    Key: video.rpc
+  Timeout: 60000
+
+RelationRpc:
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    Key: relation.rpc
+  Timeout: 60000
+
+ChatRpc:
+  Etcd:
+    Hosts:
+    - 127.0.0.1:2379
+    Key: chat.rpc
+  Timeout: 60000

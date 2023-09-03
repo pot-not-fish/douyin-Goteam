@@ -23,7 +23,8 @@ message LoginResp {
 }
 
 message UserinfoReq {
-    int64 user_id = 1;
+    int64 to_user_id = 1;
+    int64 user_id = 2;
 }
 
 message UserinfoResp {

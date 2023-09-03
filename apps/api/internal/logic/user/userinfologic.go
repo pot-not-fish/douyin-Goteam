@@ -27,13 +27,15 @@ func NewUserinfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Userinfo
 
 func (l *UserinfoLogic) Userinfo(req *types.UserinfoReq) (resp *types.UserinfoResp, err error) {
 	// todo: add your logic here and delete this line
+
 	// token鉴权
-	err = authcrypto.AuthToken(req.Token)
+	id, err := authcrypto.AuthToken(req.Token)
 	if err != nil {
 		return &types.UserinfoResp{Status_code: 1, Status_msg: err.Error(), User: nil}, nil
 	}
+
 	// 发送给rpc的userinfo处理
-	userinfoResp, err := l.svcCtx.UserRpc.Userinfo(l.ctx, &user.UserinfoReq{UserId: req.User_id})
+	userinfoResp, err := l.svcCtx.UserRpc.Userinfo(l.ctx, &user.UserinfoReq{UserId: id, ToUserId: req.User_id})
 	if err != nil {
 		return &types.UserinfoResp{Status_code: 1, Status_msg: err.Error(), User: nil}, nil
 	} else {
