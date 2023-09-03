@@ -1,5 +1,8 @@
 # douyin-Goteam
+# 项目文档
+
 ## 架构设计
+
 ![[Pasted image 20230903111618.png|700]](https://p3-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/695cb697e49c410e9953f0b00a0ccdfc~tplv-k3u1fbpfcp-jj-mark:3024:0:0:0:q75.awebp#?w=799&h=636&s=48957&e=png&b=141414)
 
 客户端发送请求给API端，API端对客户进行鉴权，并且把数据进行拆分发送给Service层，Service层的RPC服务分别在ETCD进行注册，API端即可通过ETCD找到相应的RPC服务，再由RPC服务调用数据库和缓存对数据进行增删改查，再返回给API端，API端即可返回数据给客户端
