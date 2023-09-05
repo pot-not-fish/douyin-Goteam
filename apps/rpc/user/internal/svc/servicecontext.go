@@ -42,7 +42,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	if err != nil {
 		panic(err)
 	}
-
 	return &ServiceContext{
 		Config:  c,
 		DbEngin: db,

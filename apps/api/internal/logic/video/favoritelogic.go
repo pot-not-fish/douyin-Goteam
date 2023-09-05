@@ -48,6 +48,7 @@ func (l *FavoriteLogic) Favorite(req *types.VideoFavoriteReq) (resp *types.Video
 			Status_msg:  err.Error(),
 		}, nil
 	}
+
 	return &types.VideoFavoriteResp{
 		Status_code: 0,
 		Status_msg:  videofavorResp.StatusMsg,

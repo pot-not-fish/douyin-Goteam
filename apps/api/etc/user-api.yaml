@@ -6,6 +6,7 @@ Timeout: 30000
 # Log:
 #   Mode: file
 #   Encoding: plain
+
 UserRpc:
   Etcd:
     Hosts:

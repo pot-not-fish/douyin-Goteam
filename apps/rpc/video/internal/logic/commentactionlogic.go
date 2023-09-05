@@ -64,10 +64,11 @@ func (l *CommentActionLogic) CommentAction(in *video.CommentActionReq) (*video.C
 	}
 
 	// 连接缓存
-	redisDb, err := pkg.RedisInit()
-	if err != nil {
-		return nil, err
-	}
+	// redisDb, err := pkg.RedisInit()
+	// if err != nil {
+	// 	return nil, err
+	// }
+	redisDb := l.svcCtx.DbRedis
 
 	// 遍历list 查找相应的视频 修改喜欢数量 (如果前端提供视频时间戳，通过时间戳分片的查询效率更高)
 	VideoList, err := redisDb.LRange("videos", 0, -1).Result()

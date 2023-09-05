@@ -15,7 +15,6 @@ type ServiceContext struct {
 var redisDb *redis.Client
 
 func NewServiceContext(c config.Config) *ServiceContext {
-
 	// 缓存连接
 	redisDb = redis.NewClient(&redis.Options{
 		Addr:     "127.0.0.1:6379", // redis地址
