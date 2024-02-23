@@ -1,4 +1,8 @@
 # douyin-Goteam
+# 演示视频
+
+https://www.bilibili.com/video/BV1VN4y1Q7ov
+
 # 项目文档
 
 ## 架构设计
@@ -172,12 +176,46 @@ go dbupdateVideo(db, &videodata, in.VideoId)
 - [x] 服务器处理超时问题（解决：API服务端，API客户端，RPC服务端都需延长超时时间，数据库操作创建协程异步进行操作）
 - [x] 数据库连接数量超过范围，并且每次请求都需要重新建立连接（解决：将原先每个文件都有的数据库和缓存连接整合到svc模块中，加载时即可创立连接）
 - [x] 未登录状态下，评论，关注和粉丝列表的查询如果发生错误会打印网络错误（解决：修改鉴权方式，即使没有携带token也可以进行查询）
-### 架构演进的可能
+# 压力测试
+## 测试流程
+- 使用postman对每个接口进行50次不间断的调用
+- 查看平均响应用时和是否通过
+- postman的测试代码如下
+```javascript
+pm.test("success send", function (){
+    const responseJson = pm.response.json();
+    pm.expect(responseJson.status_code).to.eql(0);
+})
+```
+## 发布评论压力测试
+- 测试样例为50个，平均用时1513ms
+- 50个测试样例通过48个
+- ![Pasted image 20230904212604.png](https://p6-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/0064330f2bb6467b9b4d83471263f3d9~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1252&h=901&s=79380&e=png&b=fefefe)
+
+## 视频feed流
+
+- 测试样例为50个，平均用时1223ms
+- 50个测试样例通过50个
+- ![Pasted image 20230904225019.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e602d92fdb014f5889687c6ccfd8c9b7~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1266&h=900&s=111677&e=png&b=fefefe)
+
+## 用户信息查询
+
+- 测试样例为50个，平均用时172ms
+- 50个测试样例通过50个
+- ![Pasted image 20230904225732.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/8052c1e16edd44dabd887889da937966~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1411&h=903&s=121262&e=png&b=fefefe)
+
+## 查看视频评论
+
+- 测试样例为50个，平均用时304ms
+- 50个测试样例通过50个
+- ![Pasted image 20230904230727.png](https://p9-juejin.byteimg.com/tos-cn-i-k3u1fbpfcp/e81617ac46c24e638375cb9ec2e70ed9~tplv-k3u1fbpfcp-jj-mark:0:0:0:0:q75.image#?w=1392&h=899&s=121278&e=png&b=fefefe)
+
+# 架构演进的可能
 - Redis引入分布式集群
 - MySQL引入分布式集群
 - 引入Docker进行部署
 - 将Token鉴权放入中间件
 - 使用对象存储云服务放置视频和图片等静态资源
-### 项目过程的反思和总结
+# 项目过程的反思和总结
 整个项目大概写了二十来天，很多概念和知识都是第一次接触，所以经常要边学边写的。再加上队友完全不上心，我也处于一个刚入门的状态，也没办法带他们，只能自己一个人写。
 前期在架构设计和一些框架的操作遇到很多问题，在网上看了很多别人实战的文章和视频才勉强解决。中期的时候开始意识到一些代码和架构上的问题，但是有些地方重写或重写设计花费时间成本太大了，担心写不完，所以只能慢慢找补救的方式。后期对着客户端测试debug，改了前面的很多地方，反复测试，总算是写完了。
